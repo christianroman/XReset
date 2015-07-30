@@ -50,7 +50,7 @@
   [alert addButtonWithTitle:@"Reset"];
   [alert addButtonWithTitle:@"Cancel"];
   [alert setMessageText:@"Are you sure you want to reset the iOS Simulators content and settings?"];
-  [alert setInformativeText:@"All installed applications, content, and settings will be moved to trash."];
+  [alert setInformativeText:@"All installed applications, content, and settings will be moved to trash.\n\n NOTE: Make sure to close the iOS Simulator before continue."];
   [alert setAlertStyle:NSWarningAlertStyle];
   
   [alert beginSheetModalForWindow:[[NSApplication sharedApplication] keyWindow] completionHandler:^(NSModalResponse returnCode) {
