@@ -55,7 +55,12 @@
   
   [alert beginSheetModalForWindow:[[NSApplication sharedApplication] keyWindow] completionHandler:^(NSModalResponse returnCode) {
     if (returnCode == NSAlertFirstButtonReturn) {
-      [self resetSimulators];
+      dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [self resetSimulators];
+        dispatch_async(dispatch_get_main_queue(), ^{
+          [self showAlert];
+        });
+      });
     }
   }];
 }
@@ -74,7 +79,9 @@
   resetTask.arguments = @[@"simctl", @"erase", @"all"];
   [resetTask launch];
   [resetTask waitUntilExit];
-  
+}
+
+- (void)showAlert {
   NSBundle *bundle = [NSBundle bundleWithIdentifier:@"com.chroman.XReset"];
   NSImage *newImage = [bundle imageForResource:@"AlertImage"];
   id alertPanel = [[DVTBezelAlertPanel alloc] initWithIcon:newImage
